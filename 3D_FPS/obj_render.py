@@ -6,12 +6,24 @@ class Object:
         self.game = game
         self.screen = game.screen
         self.wall_texture = self.load_wall()
+    
+    def draw(self):
+        self.render_game_obj()
+       
+    def render_game_obj(self):
+        list_obj = self.game.raycasting.obj_to_render
+        for depth, image, pos in list_obj:
+            self.screen.blit(image, pos)
         
     def get_Texture(self, path, res=(TEXTURE_SIZE, TEXTURE_SIZE)):
-        texture = pg.image.load(path).convert_alpha()
-        return pg.transform.scale(texture,res)
+        try:
+            texture = pg.image.load(path).convert_alpha()
+            return pg.transform.scale(texture, res)
+        except pg.error as e:
+            print("Error loading texture:", e)
+            return None
     
     def load_wall(self):
         return {
-            1: self.get_Texture('Texture/1.png')
+            1: self.get_Texture('Texture/2.png')
         }

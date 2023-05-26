@@ -20,7 +20,7 @@ class Game:
         self.player = Player(self)
         self.object_rendering = Object(self)
         self.raycasting = Raycasting(self)
-    
+        
     def update(self):
         self.player.update()
         self.raycasting.update()
@@ -30,10 +30,10 @@ class Game:
         
     def draw(self):
         self.screen.fill([0,0,0])
+        self.object_rendering.draw()
         #self.map.draw()
         #self.player.draw()
         
-    
     def check_event(self):
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):

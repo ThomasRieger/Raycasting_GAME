@@ -14,8 +14,9 @@ class Object:
         list_obj = self.game.raycasting.obj_to_render
         for depth, image, pos in list_obj:
             self.screen.blit(image, pos)
-        
-    def get_Texture(self, path, res=(TEXTURE_SIZE, TEXTURE_SIZE)):
+            
+    @staticmethod    
+    def get_Texture(path, res=(TEXTURE_SIZE, TEXTURE_SIZE)):
         try:
             texture = pg.image.load(path).convert_alpha()
             return pg.transform.scale(texture, res)

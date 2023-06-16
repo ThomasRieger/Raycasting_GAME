@@ -13,13 +13,20 @@ class Raycasting:
         self.obj_to_render = []
         for ray, value in enumerate(self.raycasting_result):
             depth, pro_height, texture, offset = value
-            
-            wall_column = self.texture[texture].subsurface(
-                int(offset * (TEXTURE_SIZE - SCALE)), 0, SCALE, TEXTURE_SIZE
-            )
-            wall_column = pg.transform.scale(wall_column, (SCALE, int(pro_height)))
-            wall_pos = (ray * SCALE, HALF_HEIGHT - pro_height // 2)
-            
+            if pro_height < HEIGHT:
+                wall_column = self.texture[texture].subsurface(
+                    int(offset * (TEXTURE_SIZE - SCALE)), 0, SCALE, TEXTURE_SIZE
+                )
+                wall_column = pg.transform.scale(wall_column, (SCALE, int(pro_height)))
+                wall_pos = (ray * SCALE, HALF_HEIGHT - pro_height // 2)
+            else:
+                texture_height = TEXTURE_SIZE * HEIGHT / pro_height
+                wall_column = self.texture[texture].subsurface(
+                    int(offset * (TEXTURE_SIZE - SCALE)), HALF_TEXTURE - texture_height // 2, SCALE, texture_height
+                )
+                wall_column = pg.transform.scale(wall_column, (SCALE, HEIGHT))
+                wall_pos = (ray * SCALE, 0)
+                
             self.game.screen.blit(wall_column, wall_pos)
     
     def raycasting(self):
